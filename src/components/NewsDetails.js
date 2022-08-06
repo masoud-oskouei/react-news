@@ -52,6 +52,7 @@ const NewsDetails = (props) => {
         onClose={() => {
           props.setIsModalOpen(false);
           props.setIsDetailsLoading(true);
+          window.history.back();
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
