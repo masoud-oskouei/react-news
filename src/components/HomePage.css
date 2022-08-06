@@ -1,0 +1,17 @@
+.homePage {
+  text-align: center;
+}
+
+.title {
+  font-size: 4em;
+  text-align: center;
+}
+
+.comeIn {
+  font-size: 2em;
+  text-align: center;
+}
+
+img {
+  display: inline-block;
+}
