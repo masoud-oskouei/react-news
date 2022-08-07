@@ -16,9 +16,6 @@ import {
 import useStyles from "./useStyles.jsx";
 
 const FetchForm = (props) => {
-  useEffect(() => {
-    props.handleSubmitFetchForm();
-  }, []);
   const classes = useStyles();
 
   return (

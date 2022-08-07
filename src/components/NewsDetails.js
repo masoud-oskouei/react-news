@@ -27,6 +27,7 @@ const NewsDetails = (props) => {
   const params = useParams();
   const location = useLocation();
 
+  /*
   useEffect(() => {
     if (props.routedFrom === ":newsId") {
       props.setIsModalOpen(true);
@@ -43,7 +44,7 @@ const NewsDetails = (props) => {
       props.setIsDetailsLoading(false);
     }
     props.setDetailsId(params.newsId);
-  }, [location]);
+  }, [location]);*/
   return (
     <div>
       {console.log("props.isModalOpen=", props.isModalOpen)}
@@ -52,7 +53,6 @@ const NewsDetails = (props) => {
         onClose={() => {
           props.setIsModalOpen(false);
           props.setIsDetailsLoading(true);
-          window.history.back();
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

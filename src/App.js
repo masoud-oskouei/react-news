@@ -61,6 +61,7 @@ const App = () => {
     query: "success",
     tags: "",
     numericFilters: ``,
+    page: 0,
   });
   const [filterParams, setFilterParams] = useState({
     filterTerm: "",
@@ -91,7 +92,22 @@ const App = () => {
       ).toString()}`,
     });
   };
-
+  /*
+  useEffect(() => {
+    setFetchParams({
+      ...fetchParams,
+      query: "success",
+      numericFilters: `created_at_i>${`${new Date(
+        new Date() - 365 * 24 * 3600 * 1000
+      )
+        .toISOString()
+        .slice(0, 10)}`},created_at_i<${`${new Date()
+        .toISOString()
+        .slice(0, 10)}`}`,
+    });
+  }, []);
+  
+  */
   useEffect(() => {
     setIsListLoading(true);
     fetchData("https://hn.algolia.com/api/v1/search?", fetchParams)
@@ -164,6 +180,7 @@ const App = () => {
   }, [pageNumber]);
   useEffect(() => {
     if (detailsId) {
+      setIsModalOpen(true);
       setIsDetailsLoading(true);
       fetchData(`https://hn.algolia.com/api/v1/items/${detailsId}`, {})
         .then((response) => {

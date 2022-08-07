@@ -7,6 +7,10 @@ import { useEffect } from "react";
 import { Typography, Grid, Modal, Box } from "@mui/material";
 import { Pagination, Button } from "@mui/material";
 const NewsPanelPage = (props) => {
+  useEffect(() => {
+    console.log("props.newsList=", props.newsList);
+    console.log("props.favesList=", props.favesList);
+  }, []);
   const location = useLocation();
   useEffect(() => {
     props.setShowState({
@@ -80,8 +84,23 @@ const NewsPanelPage = (props) => {
         favesHandler={props.favesHandler}
         showState={props.showState}
         isListLoading={props.isListLoading}
+        setDetailsId={props.setDetailsId}
+        setIsModalOpen={props.setIsModalOpen}
+        setIsDetailsLoading={props.setIsDetailsLoading}
+        detailsId={props.detailsId}
       />
-      <Routes>
+      <NewsDetails
+        routedFrom={":newsId"}
+        setDetailsId={props.setDetailsId}
+        newsDetails={props.newsDetails}
+        isDetailsLoading={props.isDetailsLoading}
+        setIsDetailsLoading={props.setIsDetailsLoading}
+        setIsModalOpen={props.setIsModalOpen}
+        isModalOpen={props.isModalOpen}
+        setIsFetchingDetails={props.setIsFetchingDetails}
+        detailsId={props.detailsId}
+      />
+      {/* <Routes>
         <Route
           path=":newsId"
           element={
@@ -111,7 +130,7 @@ const NewsPanelPage = (props) => {
             />
           }
         ></Route>
-      </Routes>
+      </Routes> */}
     </div>
   );
 };
