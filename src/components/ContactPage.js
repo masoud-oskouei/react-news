@@ -44,7 +44,7 @@ const ContactPage = (props) => {
               const inputMessageData = {
                 name: document.getElementById("name").value,
                 email: document.getElementById("email").value,
-                body: "body",
+                body: document.getElementById("messageBody").value,
               };
               props.handleMessage(
                 inputMessageData,
