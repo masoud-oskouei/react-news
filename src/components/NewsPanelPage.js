@@ -48,33 +48,38 @@ const NewsPanelPage = (props) => {
             fetchParams={props.fetchParams}
           />
         )}
-        {props.showState.activeList === "all" && (
-          <Grid
-            container
-            spacing={3}
-            justifyContent="center"
-            style={{ marginBottom: "0.5em", marginTop: "0.01em" }}
-          >
-            {/* <Grid item>
+        {props.showState.activeList === "all" &&
+          props.showState.isShowingFetchForm && (
+            <Grid
+              container
+              spacing={3}
+              justifyContent="center"
+              style={{ marginBottom: "0.5em", marginTop: "0.01em" }}
+            >
+              {/* <Grid item>
               <Typography variant="subtitle2">
                 Total Items Found= {props.fetchedNumbers.totalFound}
                 &nbsp;&nbsp;&nbsp;&nbsp; Showing page: <b>{props.pageNumber}</b> 
               </Typography>
             </Grid>*/}
-            <Grid item>
-              <Pagination
-                color="primary"
-                showFirstButton
-                showLastButton
-                count={props.fetchedNumbers.numberOfpagesFound}
-                page={props.pageNumber}
-                onChange={(e, selectedPage) => {
-                  props.setPageNumber(selectedPage);
-                }}
-              />
+              <Grid item>
+                <Pagination
+                  color="primary"
+                  showFirstButton
+                  showLastButton
+                  count={props.fetchedNumbers.numberOfpagesFound}
+                  page={props.pageNumber}
+                  onChange={(e, selectedPage) => {
+                    props.setPageNumber(selectedPage);
+                    props.setFilterParams({
+                      filterTerm: "",
+                      sortBy: "default",
+                    });
+                  }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        )}{" "}
+          )}{" "}
       </div>
 
       <NewsRows

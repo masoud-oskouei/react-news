@@ -64,13 +64,17 @@ function NewsListFilters(props) {
               variant="contained"
               fullWidth
               color="primary"
-              onClick={() =>
+              onClick={() => {
                 props.setShowState({
                   ...props.showState,
                   isShowingFetchForm: true,
                   isShowingFilterForm: false,
-                })
-              }
+                });
+                props.setFilterParams({
+                  filterTerm: "",
+                  sortBy: "default",
+                });
+              }}
             >
               &lt;&lt;&lt; Go Back to Fetch Form{" "}
             </Button>
