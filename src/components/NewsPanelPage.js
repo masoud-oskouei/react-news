@@ -63,6 +63,7 @@ const NewsPanelPage = (props) => {
             </Grid>*/}
             <Grid item>
               <Pagination
+                color="primary"
                 showFirstButton
                 showLastButton
                 count={props.fetchedNumbers.numberOfpagesFound}
