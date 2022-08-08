@@ -1,4 +1,7 @@
 import { fetchData } from "./functions/fetchData";
+import { fetchBecauseParamsChanged } from "./functions/fetchBecauseParamsChanged";
+import { fetchBecausePageChanged } from "./functions/fetchBecausePageChanged";
+import { fetchBecauseDetailsIdChanged } from "./functions/fetchBecauseDetailsIdChanged";
 import { favesHandler } from "./functions/favesHandler";
 import { handleMessage } from "./functions/handleMessage";
 import { fetchStats } from "./functions/fetchStats";
@@ -71,12 +74,6 @@ const App = () => {
   const gotoFetchForm = () => {
     setIsShowingFetch(true);
   };
-  useEffect(() => {
-    fetchStats.then((stats) => {
-      setStats(stats);
-    });
-  }, []);
-
   const handleSubmitFetchForm = (e) => {
     if (e) {
       e.preventDefault();
@@ -92,112 +89,48 @@ const App = () => {
       ).toString()}`,
     });
   };
-  /*
   useEffect(() => {
-    setFetchParams({
-      ...fetchParams,
-      query: "success",
-      numericFilters: `created_at_i>${`${new Date(
-        new Date() - 365 * 24 * 3600 * 1000
-      )
-        .toISOString()
-        .slice(0, 10)}`},created_at_i<${`${new Date()
-        .toISOString()
-        .slice(0, 10)}`}`,
+    fetchStats.then((stats) => {
+      setStats(stats);
     });
   }, []);
-  
-  */
-  useEffect(() => {
-    setIsListLoading(true);
-    fetchData("https://hn.algolia.com/api/v1/search?", fetchParams)
-      .then((response) => {
-        console.log(response);
-        let tempList = [];
-        response.hits.forEach((newsItem) => {
-          tempList = [
-            ...tempList,
-            {
-              ...newsItem,
-              urlToImage: `newspics/abstract (${parseInt(
-                newsItem.objectID % 100
-              )}).jpg`,
-            },
-          ];
-        });
-        setNewsList(tempList);
-        setIsListLoading(false);
 
-        setFetchedNumbers({
-          totalFound: response.nbHits,
-          numberOfpagesFound: response.nbPages,
-          pageShown: response.page + 1,
-        });
-        setPageNumber(response.page + 1);
-        setNewsDetails(null);
-        setDetailsId(null);
-      })
-      .catch((error) => console.log(error));
+  useEffect(() => {
+    fetchBecauseParamsChanged(
+      fetchParams,
+      setIsListLoading,
+      fetchData,
+      setNewsList,
+      setFetchedNumbers,
+      setPageNumber,
+      setNewsDetails,
+      setDetailsId
+    );
   }, [fetchParams]);
 
   useEffect(() => {
-    setIsListLoading(true);
-    fetchData("https://hn.algolia.com/api/v1/search?", {
-      ...fetchParams,
-      page: pageNumber - 1,
-    })
-      .then((response) => {
-        console.log(response);
-        let tempList = [];
-        response.hits.forEach((newsItem) => {
-          const tempItem = { ...newsItem };
-          Object.keys(tempItem).forEach((key) => {
-            if (key === "title" && !tempItem[key]) {
-              tempItem[key] = "No title!";
-            }
-          });
-          tempList = [
-            ...tempList,
-            {
-              ...tempItem,
-              urlToImage: `newspics/abstract (${parseInt(
-                newsItem.objectID % 100
-              )}).jpg`,
-            },
-          ];
-        });
-        setNewsList(tempList);
-        setIsListLoading(false);
-        setFetchedNumbers({
-          totalFound: response.nbHits,
-          numberOfpagesFound: response.nbPages,
-          pageShown: response.page + 1,
-        });
-        setNewsDetails(null);
-        setDetailsId(null);
-      })
-      .catch((error) => console.log(error));
+    fetchBecausePageChanged(
+      fetchParams,
+      setIsListLoading,
+      fetchData,
+      setNewsList,
+      setFetchedNumbers,
+      pageNumber,
+      setNewsDetails,
+      setDetailsId
+    );
   }, [pageNumber]);
+
   useEffect(() => {
-    if (detailsId) {
-      setIsModalOpen(true);
-      setIsDetailsLoading(true);
-      fetchData(`https://hn.algolia.com/api/v1/items/${detailsId}`, {})
-        .then((response) => {
-          console.log("fetched data for new detailsId=", response);
-          const tempItem = { ...response };
-          Object.keys(tempItem).forEach((key) => {
-            if (key === "title" && !tempItem[key]) {
-              tempItem[key] = "No title!";
-            }
-          });
-          setNewsDetails(tempItem);
-        })
-        .finally(() => {
-          setIsDetailsLoading(false);
-        });
-    }
+    fetchBecauseDetailsIdChanged(
+      detailsId,
+      setIsModalOpen,
+      setIsDetailsLoading,
+      fetchData,
+      setNewsDetails
+    );
   }, [detailsId]);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
