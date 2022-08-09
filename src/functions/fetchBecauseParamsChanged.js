@@ -1,15 +1,7 @@
-export const fetchBecauseParamsChanged = (
-  fetchParams,
-  setIsListLoading,
-  fetchData,
-  setNewsList,
-  setFetchedNumbers,
-  setPageNumber,
-  setNewsDetails,
-  setDetailsId
-) => {
-  setIsListLoading(true);
-  fetchData("https://hn.algolia.com/api/v1/search?", fetchParams)
+import { fetchData } from "./fetchData.js";
+export const fetchBecauseParamsChanged = (_) => {
+  _.setIsListLoading(true);
+  fetchData("https://hn.algolia.com/api/v1/search?", _.fetchParams)
     .then((response) => {
       console.log(response);
       let tempList = [];
@@ -24,17 +16,17 @@ export const fetchBecauseParamsChanged = (
           },
         ];
       });
-      setNewsList(tempList);
-      setIsListLoading(false);
+      _.setNewsList(tempList);
+      _.setIsListLoading(false);
 
-      setFetchedNumbers({
+      _.setFetchedNumbers({
         totalFound: response.nbHits,
         numberOfpagesFound: response.nbPages,
         pageShown: response.page + 1,
       });
-      setPageNumber(response.page + 1);
-      setNewsDetails(null);
-      setDetailsId(null);
+      _.setPageNumber(response.page + 1);
+      _.setNewsDetails(null);
+      _.setDetailsId(null);
     })
     .catch((error) => console.log(error));
 };

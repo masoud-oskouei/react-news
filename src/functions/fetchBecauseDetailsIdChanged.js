@@ -1,14 +1,9 @@
-export const fetchBecauseDetailsIdChanged = (
-  detailsId,
-  setIsModalOpen,
-  setIsDetailsLoading,
-  fetchData,
-  setNewsDetails
-) => {
-  if (detailsId) {
-    setIsModalOpen(true);
-    setIsDetailsLoading(true);
-    fetchData(`https://hn.algolia.com/api/v1/items/${detailsId}`, {})
+import { fetchData } from "./fetchData.js";
+export const fetchBecauseDetailsIdChanged = (_) => {
+  if (_.detailsId) {
+    _.setIsModalOpen(true);
+    _.setIsDetailsLoading(true);
+    fetchData(`https://hn.algolia.com/api/v1/items/${_.detailsId}`, {})
       .then((response) => {
         console.log("fetched data for new detailsId=", response);
         const tempItem = { ...response };
@@ -17,10 +12,10 @@ export const fetchBecauseDetailsIdChanged = (
             tempItem[key] = "No title!";
           }
         });
-        setNewsDetails(tempItem);
+        _.setNewsDetails(tempItem);
       })
       .finally(() => {
-        setIsDetailsLoading(false);
+        _.setIsDetailsLoading(false);
       });
   }
 };

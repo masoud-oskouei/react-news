@@ -1,17 +1,9 @@
-export const fetchBecausePageChanged = (
-  fetchParams,
-  setIsListLoading,
-  fetchData,
-  setNewsList,
-  setFetchedNumbers,
-  pageNumber,
-  setNewsDetails,
-  setDetailsId
-) => {
-  setIsListLoading(true);
+import { fetchData } from "./fetchData.js";
+export const fetchBecausePageChanged = (_) => {
+  _.setIsListLoading(true);
   fetchData("https://hn.algolia.com/api/v1/search?", {
-    ...fetchParams,
-    page: pageNumber - 1,
+    ..._.fetchParams,
+    page: _.pageNumber - 1,
   })
     .then((response) => {
       console.log(response);
@@ -33,15 +25,15 @@ export const fetchBecausePageChanged = (
           },
         ];
       });
-      setNewsList(tempList);
-      setIsListLoading(false);
-      setFetchedNumbers({
+      _.setNewsList(tempList);
+      _.setIsListLoading(false);
+      _.setFetchedNumbers({
         totalFound: response.nbHits,
         numberOfpagesFound: response.nbPages,
         pageShown: response.page + 1,
       });
-      setNewsDetails(null);
-      setDetailsId(null);
+      _.setNewsDetails(null);
+      _.setDetailsId(null);
     })
     .catch((error) => console.log(error));
 };

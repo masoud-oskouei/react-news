@@ -1,27 +1,21 @@
-import { fetchData } from "./functions/fetchData";
 import { fetchBecauseParamsChanged } from "./functions/fetchBecauseParamsChanged";
 import { fetchBecausePageChanged } from "./functions/fetchBecausePageChanged";
 import { fetchBecauseDetailsIdChanged } from "./functions/fetchBecauseDetailsIdChanged";
-import { favesHandler } from "./functions/favesHandler";
-import { handleMessage } from "./functions/handleMessage";
 import { fetchStats } from "./functions/fetchStats";
-import { goBacktoFilterForm } from "./functions/goBacktoFilterForm";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import NewsPanelPage from "./components/NewsPanelPage";
 import ContactPage from "./components/ContactPage";
 import NotFoundPage from "./components/NotFoundPage";
-import CampaignIcon from "@mui/icons-material/Campaign";
+import AppBarComponent from "./components/AppBarComponent";
 import useStyles from "./components/useStyles.jsx";
-import { AppBar, CssBaseline, Toolbar, Container } from "@mui/material";
-////////////////////
+import { CssBaseline, Container } from "@mui/material";
 
-//////////////////
 const App = () => {
   const classes = useStyles();
-  //states:
 
+  //declare states:
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); //!!
   const [pageNumber, setPageNumber] = useState(1);
@@ -59,156 +53,69 @@ const App = () => {
     filterTerm: "",
     sortBy: "default",
   });
+
   //add the states and setStates into the object "_"
-  //we will easily pass the "_" down the tree to all components
+  //it is easy to pass the "_" down the tree to all components and functions
   const _ = {};
   _.isModalOpen = isModalOpen;
   _.setIsModalOpen = setIsModalOpen;
-
   _.isFetchingDetails = setIsFetchingDetails;
   _.isFetchingDetails = isFetchingDetails;
-
   _.pageNumber = pageNumber;
   _.setPageNumber = setPageNumber;
-
   _.isDetailsLoading = isDetailsLoading;
   _.setIsDetailsLoading = setIsDetailsLoading;
-
   _.isListLoading = isListLoading;
   _.setIsListLoading = setIsListLoading;
-
   _.stats = stats;
   _.setStats = setStats;
-
   _.isShowingFetch = isShowingFetch;
   _.setIsShowingFetch = setIsShowingFetch;
-
   _.newsList = newsList;
   _.setNewsList = setNewsList;
-
   _.isMessageSent = isMessageSent;
   _.setIsMessageSent = setIsMessageSent;
-
   _.messageObject = messageObject;
   _.setMessageObject = setMessageObject;
-
   _.newsDetails = newsDetails;
   _.setNewsDetails = setNewsDetails;
-
   _.detailsId = detailsId;
   _.setDetailsId = setDetailsId;
-
   _.favesList = favesList;
   _.setFavesList = setFavesList;
-
   _.showState = showState;
   _.setShowState = setShowState;
-
   _.fetchedNumbers = fetchedNumbers;
   _.setFetchedNumbers = setFetchedNumbers;
-
   _.fetchParams = fetchParams;
   _.setFetchParams = setFetchParams;
-
   _.filterParams = filterParams;
   _.setFilterParams = setFilterParams;
+  //end of state declaration
 
-  /////end of state declaration
-
+  // useEffect are here:
   useEffect(() => {
-    fetchStats(setStats, fetchData);
+    fetchStats(_); //fetch the statistics for homePage chart
   }, []);
 
   useEffect(() => {
-    fetchBecauseParamsChanged(
-      fetchParams,
-      setIsListLoading,
-      fetchData,
-      setNewsList,
-      setFetchedNumbers,
-      setPageNumber,
-      setNewsDetails,
-      setDetailsId
-    );
+    fetchBecauseParamsChanged(_);
   }, [fetchParams]);
 
   useEffect(() => {
-    fetchBecausePageChanged(
-      fetchParams,
-      setIsListLoading,
-      fetchData,
-      setNewsList,
-      setFetchedNumbers,
-      pageNumber,
-      setNewsDetails,
-      setDetailsId
-    );
+    fetchBecausePageChanged(_);
   }, [pageNumber]);
 
   useEffect(() => {
-    fetchBecauseDetailsIdChanged(
-      detailsId,
-      setIsModalOpen,
-      setIsDetailsLoading,
-      fetchData,
-      setNewsDetails
-    );
+    fetchBecauseDetailsIdChanged(_);
   }, [detailsId]);
-
+  //end of useEffects
+  //
   return (
     <div className={classes.root}>
       <CssBaseline />
       <BrowserRouter>
-        <AppBar position="relative" className={classes.appBar}>
-          <Toolbar>
-            <CampaignIcon className={classes.navIcon} />
-            <nav>
-              <NavLink
-                to="/"
-                style={({ isActive }) =>
-                  isActive ? { color: "#fc814a" } : { color: "#DBDFAC" }
-                }
-                className={classes.navLink}
-              >
-                {" "}
-                Home{" "}
-              </NavLink>
-              |
-              <NavLink
-                to="/newspanel"
-                style={({ isActive }) =>
-                  isActive ? { color: "#fc814a" } : { color: "#DBDFAC" }
-                }
-                className={classes.navLink}
-              >
-                {" "}
-                News Panel{" "}
-              </NavLink>
-              |
-              <NavLink
-                to="/faves"
-                style={({ isActive }) =>
-                  isActive ? { color: "#fc814a" } : { color: "#DBDFAC" }
-                }
-                className={classes.navLink}
-              >
-                {" "}
-                Faves{" "}
-              </NavLink>
-              |
-              <NavLink
-                to="/contact"
-                style={({ isActive }) =>
-                  isActive ? { color: "#fc814a" } : { color: "#DBDFAC" }
-                }
-                className={classes.navLink}
-              >
-                {" "}
-                Contact Us{" "}
-              </NavLink>
-            </nav>
-          </Toolbar>
-        </AppBar>
+        <AppBarComponent />
         <main>
           <div>
             <Container maxWidth="bg">

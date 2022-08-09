@@ -1,4 +1,5 @@
-export const fetchStats = async (setStats, fetchData) => {
+import { fetchData } from "./fetchData.js";
+export const fetchStats = async (_) => {
   let daysBeforeToday = [0, 1, 2, 3, 4, 5, 6];
   let x = 0;
   let requests = [];
@@ -44,7 +45,7 @@ export const fetchStats = async (setStats, fetchData) => {
       statsLabled.forEach((labledStat) => {
         stats.push(labledStat.nbHits);
       });
-      setStats(stats);
+      _.setStats(stats);
     }
   });
 };
