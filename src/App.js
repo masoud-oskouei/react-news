@@ -5,6 +5,7 @@ import { fetchBecauseDetailsIdChanged } from "./functions/fetchBecauseDetailsIdC
 import { favesHandler } from "./functions/favesHandler";
 import { handleMessage } from "./functions/handleMessage";
 import { fetchStats } from "./functions/fetchStats";
+import { goBacktoFilterForm } from "./functions/goBacktoFilterForm";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import HomePage from "./components/HomePage";
@@ -13,27 +14,16 @@ import ContactPage from "./components/ContactPage";
 import NotFoundPage from "./components/NotFoundPage";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import useStyles from "./components/useStyles.jsx";
-
-import {
-  Typography,
-  AppBar,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CssBaseline,
-  Grid,
-  Toolbar,
-  Container,
-  Button,
-} from "@mui/material";
+import { AppBar, CssBaseline, Toolbar, Container } from "@mui/material";
 ////////////////////
 
 //////////////////
 const App = () => {
   const classes = useStyles();
+  //states:
+
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); //!!
   const [pageNumber, setPageNumber] = useState(1);
   const [isDetailsLoading, setIsDetailsLoading] = useState(true);
   const [isListLoading, setIsListLoading] = useState(false);
@@ -59,7 +49,6 @@ const App = () => {
       ? JSON.parse(window.localStorage.getItem("faves"))
       : []
   );
-
   const [fetchParams, setFetchParams] = useState({
     query: "success",
     tags: "",
@@ -70,29 +59,64 @@ const App = () => {
     filterTerm: "",
     sortBy: "default",
   });
+  //add the states and setStates into the object "_"
+  //we will easily pass the "_" down the tree to all components
+  const _ = {};
+  _.isModalOpen = isModalOpen;
+  _.setIsModalOpen = setIsModalOpen;
 
-  const gotoFetchForm = () => {
-    setIsShowingFetch(true);
-  };
-  const handleSubmitFetchForm = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
+  _.isFetchingDetails = setIsFetchingDetails;
+  _.isFetchingDetails = isFetchingDetails;
 
-    setFetchParams({
-      ...fetchParams,
-      query: `${document.getElementById("fetchTerm").value.toLowerCase()}`,
-      numericFilters: `created_at_i>${(
-        new Date(document.getElementById("dateFrom").value).getTime() / 1000
-      ).toString()},created_at_i<${(
-        new Date(document.getElementById("dateTo").value).getTime() / 1000
-      ).toString()}`,
-    });
-  };
+  _.pageNumber = pageNumber;
+  _.setPageNumber = setPageNumber;
+
+  _.isDetailsLoading = isDetailsLoading;
+  _.setIsDetailsLoading = setIsDetailsLoading;
+
+  _.isListLoading = isListLoading;
+  _.setIsListLoading = setIsListLoading;
+
+  _.stats = stats;
+  _.setStats = setStats;
+
+  _.isShowingFetch = isShowingFetch;
+  _.setIsShowingFetch = setIsShowingFetch;
+
+  _.newsList = newsList;
+  _.setNewsList = setNewsList;
+
+  _.isMessageSent = isMessageSent;
+  _.setIsMessageSent = setIsMessageSent;
+
+  _.messageObject = messageObject;
+  _.setMessageObject = setMessageObject;
+
+  _.newsDetails = newsDetails;
+  _.setNewsDetails = setNewsDetails;
+
+  _.detailsId = detailsId;
+  _.setDetailsId = setDetailsId;
+
+  _.favesList = favesList;
+  _.setFavesList = setFavesList;
+
+  _.showState = showState;
+  _.setShowState = setShowState;
+
+  _.fetchedNumbers = fetchedNumbers;
+  _.setFetchedNumbers = setFetchedNumbers;
+
+  _.fetchParams = fetchParams;
+  _.setFetchParams = setFetchParams;
+
+  _.filterParams = filterParams;
+  _.setFilterParams = setFilterParams;
+
+  /////end of state declaration
+
   useEffect(() => {
-    fetchStats.then((stats) => {
-      setStats(stats);
-    });
+    fetchStats(setStats, fetchData);
   }, []);
 
   useEffect(() => {
@@ -189,86 +213,16 @@ const App = () => {
           <div>
             <Container maxWidth="bg">
               <Routes>
-                <Route path="/" element={<HomePage stats={stats} />} />
+                <Route path="/" element={<HomePage _={_} />} />
                 <Route
                   path="newspanel/*"
-                  element={
-                    <NewsPanelPage
-                      fetchedNumbers={fetchedNumbers}
-                      routedFrom="newspanel/*"
-                      setShowState={setShowState}
-                      showState={showState}
-                      setFilterParams={setFilterParams}
-                      gotoFetchForm={gotoFetchForm}
-                      fetchParams={fetchParams}
-                      setFetchParams={setFetchParams}
-                      newsList={newsList}
-                      favesList={favesList}
-                      setFavesList={setFavesList}
-                      filterParams={filterParams}
-                      favesHandler={favesHandler}
-                      newsDetails={newsDetails}
-                      setNewsDetails={setNewsDetails}
-                      setDetailsId={setDetailsId}
-                      isDetailsLoading={isDetailsLoading}
-                      setIsDetailsLoading={setIsDetailsLoading}
-                      isListLoading={isListLoading}
-                      setPageNumber={setPageNumber}
-                      pageNumber={pageNumber}
-                      handleSubmitFetchForm={handleSubmitFetchForm}
-                      setIsModalOpen={setIsModalOpen}
-                      isModalOpen={isModalOpen}
-                      setIsFetchingDetails={setIsFetchingDetails}
-                      detailsId={detailsId}
-                    />
-                  }
+                  element={<NewsPanelPage _={_} routedFrom="newspanel/*" />}
                 ></Route>
                 <Route
                   path="faves/*"
-                  element={
-                    <NewsPanelPage
-                      routedFrom="faves/*"
-                      fetchedNumbers={fetchedNumbers}
-                      setShowState={setShowState}
-                      showState={showState}
-                      favesList={favesList}
-                      setFavesList={setFavesList}
-                      filterParams={filterParams}
-                      setFilterParams={setFilterParams}
-                      favesHandler={favesHandler}
-                      gotoFetchForm={gotoFetchForm}
-                      fetchParams={fetchParams}
-                      setFetchParams={setFetchParams}
-                      newsList={newsList}
-                      isShowingFetch={isShowingFetch}
-                      newsDetails={newsDetails}
-                      setDetailsId={setDetailsId}
-                      setNewsDetails={setNewsDetails}
-                      isDetailsLoading={isDetailsLoading}
-                      setIsDetailsLoading={setIsDetailsLoading}
-                      isListLoading={isListLoading}
-                      setPageNumber={setPageNumber}
-                      pageNumber={pageNumber}
-                      handleSubmitFetchForm={handleSubmitFetchForm}
-                      setIsModalOpen={setIsModalOpen}
-                      isModalOpen={isModalOpen}
-                      setIsFetchingDetails={setIsFetchingDetails}
-                      detailsId={detailsId}
-                    />
-                  }
+                  element={<NewsPanelPage _={_} routedFrom="faves/*" />}
                 />
-                <Route
-                  path="contact/*"
-                  element={
-                    <ContactPage
-                      handleMessage={handleMessage}
-                      isMessageSent={isMessageSent}
-                      setIsMessageSent={setIsMessageSent}
-                      messageObject={messageObject}
-                      setMessageObject={setMessageObject}
-                    />
-                  }
-                />
+                <Route path="contact/*" element={<ContactPage _={_} />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Container>

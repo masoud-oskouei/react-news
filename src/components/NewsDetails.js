@@ -27,68 +27,52 @@ const NewsDetails = (props) => {
   const params = useParams();
   const location = useLocation();
 
-  /*
-  useEffect(() => {
-    if (props.routedFrom === ":newsId") {
-      props.setIsModalOpen(true);
-    }
-    console.log(
-      "before If params.newsId == props.detailsId...",
-      params.newsId == props.detailsId
-    );
-    console.log("params.newsId", params.newsId);
-    console.log("props.detailsId", props.detailsId);
-    //console.log("params.newsId",typeof(params.newsId))
-    //console.log("params.newsId",typeof(params.newsId))
-    if (params.newsId == props.detailsId) {
-      props.setIsDetailsLoading(false);
-    }
-    props.setDetailsId(params.newsId);
-  }, [location]);*/
   return (
     <div>
-      {console.log("props.isModalOpen=", props.isModalOpen)}
+      {console.log("props._.isModalOpen[state]=", props._.isModalOpen)}
       <Modal
-        open={props.isModalOpen}
+        open={props._.isModalOpen}
         onClose={() => {
-          props.setIsModalOpen(false);
-          props.setIsDetailsLoading(true);
+          props._.setIsModalOpen(false);
+          props._.setIsDetailsLoading(true);
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          {props.isDetailsLoading && (
+          {props._.isDetailsLoading && (
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Is loading ... <CircularProgress />
             </Typography>
           )}
-          {console.log("modal: props.newsDetails=", props.newsDetails)}
+          {console.log("modal: props.newsDetails=", props._.newsDetails)}
           {console.log(
             "modal: props.isDetailsLoading =",
-            props.isDetailsLoading
+            props._.isDetailsLoading
           )}
-          {!props.newsDetails && !props.isDetailsLoading && (
+          {!props._.newsDetails && !props._.isDetailsLoading && (
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Click an item please...
             </Typography>
           )}
-          {props.newsDetails && !props.isDetailsLoading && (
+          {props._.newsDetails && !props._.isDetailsLoading && (
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <h2>
-                <a href={props.newsDetails.url}>{props.newsDetails.title}</a>
+                <a href={props._.newsDetails.url}>
+                  {props._.newsDetails.title}
+                </a>
               </h2>
               <br />
               ID: {params.newsId}
               <br /> created at: &nbsp;
-              {props.newsDetails.created_at.slice(0, 19)}
+              {props._.newsDetails.created_at.slice(0, 19)}
               <br />
-              <address>by: {props.newsDetails.author}</address>
+              <address>by: {props._.newsDetails.author}</address>
               <br />
               <br />
               <b>COMMENTS</b>
-              {props.newsDetails.children &&
-                props.newsDetails.children.map((comment, index) => {
+              {props._.newsDetails.children &&
+                props._.newsDetails.children.map((comment, index) => {
                   return (
                     <div className="row" key={index}>
                       <p>

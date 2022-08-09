@@ -1,16 +1,16 @@
-export const favesHandler = (newsItem, favesList, setFavesList) => {
+export const favesHandler = (newsItem, _) => {
   console.log("favesHandler");
   let tempFavesList = [];
-  if (favesList.includes(newsItem)) {
+  if (_.favesList.includes(newsItem)) {
     console.log("was in");
     tempFavesList = [
-      ...favesList.slice(0, favesList.indexOf(newsItem)),
-      ...favesList.slice(favesList.indexOf(newsItem) + 1),
+      ..._.favesList.slice(0, _.favesList.indexOf(newsItem)),
+      ..._.favesList.slice(_.favesList.indexOf(newsItem) + 1),
     ];
   } else {
     console.log("was not");
-    tempFavesList = [...favesList, newsItem];
+    tempFavesList = [..._.favesList, newsItem];
   }
   window.localStorage.setItem("faves", JSON.stringify(tempFavesList));
-  setFavesList(tempFavesList);
+  _.setFavesList(tempFavesList);
 };

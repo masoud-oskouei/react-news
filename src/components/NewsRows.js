@@ -1,5 +1,5 @@
 import { sortFunctions } from "../functions/sortFunctions";
-import { Link } from "react-router-dom";
+import { favesHandler } from "../functions/favesHandler";
 import { CircularProgress } from "@mui/material";
 import * as React from "react";
 import List from "@mui/material/List";
@@ -11,19 +11,21 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 const NewsRows = (props) => {
   let list =
-    props.showState.activeList === "faves" ? props.favesList : props.newsList;
+    props._.showState.activeList === "faves"
+      ? props._.favesList
+      : props._.newsList;
   return (
     <>
       <div remind="new">
-        {props.isListLoading && (
+        {props._.isListLoading && (
           <div>
             List is Loading . . . <CircularProgress />{" "}
           </div>
         )}
-        {!props.isListLoading && list.length === 0 && (
+        {!props._.isListLoading && list.length === 0 && (
           <div>Nothing found! </div>
         )}
-        {!props.isListLoading && (
+        {!props._.isListLoading && (
           <List
             sx={{
               width: "90%",
@@ -37,28 +39,30 @@ const NewsRows = (props) => {
                   (newsItem.content &&
                     newsItem.content
                       .toLowerCase()
-                      .includes(props.filterParams.filterTerm.toLowerCase())) ||
+                      .includes(
+                        props._.filterParams.filterTerm.toLowerCase()
+                      )) ||
                   (newsItem.description &&
                     newsItem.description
                       .toLowerCase()
-                      .includes(props.filterParams.filterTerm)) ||
+                      .includes(props._.filterParams.filterTerm)) ||
                   (newsItem.title &&
                     newsItem.title
                       .toLowerCase()
-                      .includes(props.filterParams.filterTerm))
+                      .includes(props._.filterParams.filterTerm))
                 );
               })
 
               .sort((a, b) => {
-                let compareFunc = sortFunctions[props.filterParams.sortBy]
-                  ? sortFunctions[props.filterParams.sortBy]
+                let compareFunc = sortFunctions[props._.filterParams.sortBy]
+                  ? sortFunctions[props._.filterParams.sortBy]
                   : sortFunctions.default;
                 return compareFunc(
-                  a[props.filterParams.sortBy]
-                    ? a[props.filterParams.sortBy]
+                  a[props._.filterParams.sortBy]
+                    ? a[props._.filterParams.sortBy]
                     : "",
-                  b[props.filterParams.sortBy]
-                    ? b[props.filterParams.sortBy]
+                  b[props._.filterParams.sortBy]
+                    ? b[props._.filterParams.sortBy]
                     : ""
                 );
               })
@@ -80,11 +84,11 @@ const NewsRows = (props) => {
                         <a href="-" onClick={(e) => e.preventDefault()}>
                           <h3
                             onClick={() => {
-                              if (newsItem.objectID == props.detailsId) {
-                                props.setIsModalOpen(true);
-                                props.setIsDetailsLoading(false);
+                              if (newsItem.objectID == props._.detailsId) {
+                                props._.setIsModalOpen(true);
+                                props._.setIsDetailsLoading(false);
                               }
-                              props.setDetailsId(newsItem.objectID);
+                              props._.setDetailsId(newsItem.objectID);
                             }}
                           >
                             {newsItem.title}
@@ -100,15 +104,11 @@ const NewsRows = (props) => {
                             color="text.primary"
                           >
                             <button
-                              onClick={() =>
-                                props.favesHandler(
-                                  newsItem,
-                                  props.favesList,
-                                  props.setFavesList
-                                )
-                              }
+                              onClick={() => {
+                                favesHandler(newsItem, props._);
+                              }}
                             >
-                              {props.favesList.includes(newsItem) ? "-" : "+"}{" "}
+                              {props._.favesList.includes(newsItem) ? "-" : "+"}{" "}
                               Fav
                             </button>
                             &nbsp;&nbsp;&nbsp;&nbsp;by {newsItem.author}
@@ -124,10 +124,6 @@ const NewsRows = (props) => {
           </List>
         )}
       </div>
-      {/* ////////////////// */}
-      {/* ////////////////// */}
-      {/* ////////////////// */}
-      {/* ////////////////// */}
     </>
   );
 };

@@ -1,25 +1,11 @@
 // the listFilters appears on top
 import React from "react";
 import useStyles from "./useStyles.jsx";
-
-import {
-  Typography,
-  AppBar,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CssBaseline,
-  Grid,
-  Toolbar,
-  Container,
-  Button,
-  TextField,
-} from "@mui/material";
+import { Grid, Button, TextField } from "@mui/material";
 function NewsListFilters(props) {
   const classes = useStyles();
   const setFilterParams = () => {
-    props.setFilterParams({
+    props._.setFilterParams({
       filterTerm: document.getElementById("filterTerm").value,
       sortBy: document.querySelectorAll('input[name="sortBy"]:checked')[0]
         .value,
@@ -57,7 +43,7 @@ function NewsListFilters(props) {
             </label>
           </label>
         </Grid>
-        {props.showState.activeList === "all" && (
+        {props._.showState.activeList === "all" && (
           <Grid item xs={12}>
             <Button
               style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
@@ -65,12 +51,12 @@ function NewsListFilters(props) {
               fullWidth
               color="primary"
               onClick={() => {
-                props.setShowState({
-                  ...props.showState,
+                props._.setShowState({
+                  ...props._.showState,
                   isShowingFetchForm: true,
                   isShowingFilterForm: false,
                 });
-                props.setFilterParams({
+                props._.setFilterParams({
                   filterTerm: "",
                   sortBy: "default",
                 });

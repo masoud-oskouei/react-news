@@ -1,14 +1,7 @@
-export const handleMessage = (
-  inputMessageData,
-  setIsMessageSent,
-  setMessageObject
-) => {
-  // let mt = {
-  //   name: e.target.name.value,
-  //   email: e.target.email.value,
-  //   body: e.target.body.value,
-  // };
-  setIsMessageSent(true);
+import { state, setState } from "../functions/constants";
+
+export const handleMessage = (inputMessageData, _) => {
+  _.setIsMessageSent(true);
   console.log(inputMessageData);
-  setMessageObject(inputMessageData);
+  _.setMessageObject(inputMessageData);
 };

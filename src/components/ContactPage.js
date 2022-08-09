@@ -1,4 +1,5 @@
 import useStyles from "./useStyles.jsx";
+import { handleMessage } from "../functions/handleMessage";
 
 import {
   Typography,
@@ -19,7 +20,7 @@ const ContactPage = (props) => {
   return (
     <div>
       <h2>Contact Page</h2>
-      {!props.isMessageSent && (
+      {!props._.isMessageSent && (
         <form id="contactForm">
           <TextField id="name" label="Name" variant="outlined" size="small" />{" "}
           <TextField id="email" label="Email" variant="outlined" size="small" />
@@ -46,11 +47,7 @@ const ContactPage = (props) => {
                 email: document.getElementById("email").value,
                 body: document.getElementById("messageBody").value,
               };
-              props.handleMessage(
-                inputMessageData,
-                props.setIsMessageSent,
-                props.setMessageObject
-              );
+              handleMessage(inputMessageData, props._);
             }}
           >
             {" "}
@@ -58,17 +55,17 @@ const ContactPage = (props) => {
           </Button>
         </form>
       )}
-      {props.isMessageSent && (
+      {props._.isMessageSent && (
         <div>
           <h3>
             Your message was converted into a JSON object. we can not sent it
             now. In the next version it will become stringified and posted to
             backend. Below is that JSON object:
-            <p>{JSON.stringify(props.messageObject).replace(/"/g, "")}</p>
+            <p>{JSON.stringify(props._.messageObject).replace(/"/g, "")}</p>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => props.setIsMessageSent(false)}
+              onClick={() => props._.setIsMessageSent(false)}
             >
               {" "}
               Compose another message

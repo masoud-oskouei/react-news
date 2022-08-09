@@ -1,18 +1,7 @@
-import { useEffect } from "react";
-import {
-  Typography,
-  AppBar,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CssBaseline,
-  Grid,
-  Toolbar,
-  Container,
-  Button,
-  TextField,
-} from "@mui/material";
+import { handleSubmitFetchForm } from "../functions/handleSubmitFetchForm";
+import { goBacktoFilterForm } from "../functions/goBacktoFilterForm";
+
+import { Grid, Button, TextField } from "@mui/material";
 import useStyles from "./useStyles.jsx";
 
 const FetchForm = (props) => {
@@ -26,15 +15,12 @@ const FetchForm = (props) => {
             id="fetchTerm"
             label="Term"
             variant="outlined"
-            defaultValue={props.fetchParams.query}
+            defaultValue={props._.fetchParams.query}
             size="small"
           />
         </Grid>
         <Grid item>
-          <label
-            htmlFor="dateFrom"
-            //className={classes.dateLabel}
-          >
+          <label htmlFor="dateFrom">
             Date from
             <input
               className={classes.datePicker}
@@ -45,24 +31,17 @@ const FetchForm = (props) => {
                 .slice(0, 10)}`}
               min="2010-01-01"
               max={`${new Date().toISOString().slice(0, 10)}`}
-              // min={`${new Date(new Date() - 10 * 365 * 24 * 3600 * 1000)
-              //   .toISOString()
-              //   .slice(0, 10)}`}
             ></input>
           </label>
         </Grid>
         <Grid item>
-          <label
-            htmlFor="dateTo"
-            //className={classes.dateLabel}
-          >
+          <label htmlFor="dateTo">
             Date to
             <input
               className={classes.datePicker}
               id="dateTo"
               type="date"
               defaultValue={`${new Date().toISOString().slice(0, 10)}`}
-              //max={`${new Date().toISOString().slice(0, 10)}`}
             ></input>
           </label>
         </Grid>
@@ -70,7 +49,9 @@ const FetchForm = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={props.handleSubmitFetchForm}
+            onClick={(e) => {
+              handleSubmitFetchForm(e, props._);
+            }}
           >
             Fetch
           </Button>
@@ -80,13 +61,9 @@ const FetchForm = (props) => {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() =>
-              props.setShowState({
-                ...props.showState,
-                isShowingFetchForm: false,
-                isShowingFilterForm: true,
-              })
-            }
+            onClick={(e) => {
+              goBacktoFilterForm(e, props._);
+            }}
           >
             Filter below items &gt;&gt;&gt;
           </Button>

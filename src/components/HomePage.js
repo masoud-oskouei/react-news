@@ -2,20 +2,7 @@ import { Link } from "react-router-dom";
 import "./HomePage.css";
 import { dayLabels } from "../functions/makeDayLabels";
 import useStyles from "./useStyles.jsx";
-import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import {
-  Typography,
-  AppBar,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CssBaseline,
-  Grid,
-  Toolbar,
-  Container,
-  Button,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
 const HomePage = (props) => {
   const classes = useStyles();
@@ -27,7 +14,7 @@ const HomePage = (props) => {
       datasets: [
         {
           label: "Number of published news stories during past week",
-          data: props.stats,
+          data: props._.stats,
         },
       ],
     },
