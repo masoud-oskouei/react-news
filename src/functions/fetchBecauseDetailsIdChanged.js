@@ -5,7 +5,7 @@ export const fetchBecauseDetailsIdChanged = (_) => {
     _.setIsDetailsLoading(true);
     fetchData(`https://hn.algolia.com/api/v1/items/${_.detailsId}`, {})
       .then((response) => {
-        console.log("fetched data for new detailsId=", response);
+        //console.log("fetched data for new detailsId=", response);
         const tempItem = { ...response };
         Object.keys(tempItem).forEach((key) => {
           if (key === "title" && !tempItem[key]) {

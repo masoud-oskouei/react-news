@@ -1,5 +1,3 @@
-import { state, setState } from "../functions/constants";
-
 export const handleMessage = (e, _) => {
   e.preventDefault();
 

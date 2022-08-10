@@ -1,19 +1,12 @@
 // the listFilters appears on top
-import React from "react";
 import useStyles from "./useStyles.jsx";
 import { Grid, Button, TextField } from "@mui/material";
+import { goBacktoFetchForm } from "../functions/goBacktoFetchForm.js";
+import { handleChangeFilterForm } from "../functions/handleChangeFilterForm.js";
 function NewsListFilters(props) {
   const classes = useStyles();
-  const setFilterParams = () => {
-    props._.setFilterParams({
-      filterTerm: document.getElementById("filterTerm").value,
-      sortBy: document.querySelectorAll('input[name="sortBy"]:checked')[0]
-        .value,
-    });
-  };
   return (
     <div style={{ margin: ".5em" }}>
-      {" "}
       <Grid container spacing={3} justifyContent="center">
         <Grid item>
           <TextField
@@ -21,11 +14,14 @@ function NewsListFilters(props) {
             label="Word to filter"
             variant="outlined"
             size="small"
-            onChange={setFilterParams}
+            onChange={(e) => handleChangeFilterForm(e, props._)}
           />
         </Grid>
         <Grid item>
-          <label className={classes.sortLabel} onChange={setFilterParams}>
+          <label
+            className={classes.sortLabel}
+            onChange={(e) => handleChangeFilterForm(e, props._)}
+          >
             Sort by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label>
               Title
@@ -50,17 +46,7 @@ function NewsListFilters(props) {
               variant="contained"
               fullWidth
               color="primary"
-              onClick={() => {
-                props._.setShowState({
-                  ...props._.showState,
-                  isShowingFetchForm: true,
-                  isShowingFilterForm: false,
-                });
-                props._.setFilterParams({
-                  filterTerm: "",
-                  sortBy: "default",
-                });
-              }}
+              onClick={(e) => goBacktoFetchForm(e, props._)}
             >
               &lt;&lt;&lt; Go Back to Fetch Form{" "}
             </Button>

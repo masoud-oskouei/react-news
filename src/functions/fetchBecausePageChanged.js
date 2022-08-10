@@ -6,7 +6,7 @@ export const fetchBecausePageChanged = (_) => {
     page: _.pageNumber - 1,
   })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       let tempList = [];
       response.hits.forEach((newsItem) => {
         const tempItem = { ...newsItem };

@@ -1,15 +1,6 @@
-import { useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import {
-  Typography,
-  Grid,
-  Modal,
-  Box,
-  Button,
-  CircularProgress,
-} from "@mui/material";
-import useStyles from "./useStyles.jsx";
-
+import { Typography, Modal, Box, CircularProgress } from "@mui/material";
+import { handleModalClose } from "../functions/handleModalClose.js";
+import NewsDescription from "./NewsDescription.js";
 const NewsDetails = (props) => {
   const modalStyle = {
     position: "absolute",
@@ -20,22 +11,13 @@ const NewsDetails = (props) => {
     height: "90%",
     overflow: "scroll",
     bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
     p: 4,
   };
-  const params = useParams();
-  const location = useLocation();
-
   return (
     <div>
-      {console.log("props._.isModalOpen[state]=", props._.isModalOpen)}
       <Modal
         open={props._.isModalOpen}
-        onClose={() => {
-          props._.setIsModalOpen(false);
-          props._.setIsDetailsLoading(true);
-        }}
+        onClose={(e) => handleModalClose(e, props._)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -45,52 +27,14 @@ const NewsDetails = (props) => {
               Is loading ... <CircularProgress />
             </Typography>
           )}
-          {console.log("modal: props.newsDetails=", props._.newsDetails)}
-          {console.log(
-            "modal: props.isDetailsLoading =",
-            props._.isDetailsLoading
-          )}
+
           {!props._.newsDetails && !props._.isDetailsLoading && (
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Click an item please...
             </Typography>
           )}
           {props._.newsDetails && !props._.isDetailsLoading && (
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <h2>
-                <a href={props._.newsDetails.url}>
-                  {props._.newsDetails.title}
-                </a>
-              </h2>
-              <br />
-              ID: {params.newsId}
-              <br /> created at: &nbsp;
-              {props._.newsDetails.created_at.slice(0, 19)}
-              <br />
-              <address>by: {props._.newsDetails.author}</address>
-              <br />
-              <br />
-              <b>COMMENTS</b>
-              {props._.newsDetails.children &&
-                props._.newsDetails.children.map((comment, index) => {
-                  return (
-                    <div className="row" key={index}>
-                      <p>
-                        {index + 1}- By <b>{comment.author}</b> at{" "}
-                        {comment.created_at.slice(0, 19)}
-                        {
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: comment.text,
-                            }}
-                          ></span>
-                        }
-                      </p>
-                      <hr />
-                    </div>
-                  );
-                })}
-            </Typography>
+            <NewsDescription _={props._}></NewsDescription>
           )}
         </Box>
       </Modal>

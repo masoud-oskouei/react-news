@@ -3,7 +3,7 @@ export const fetchBecauseParamsChanged = (_) => {
   _.setIsListLoading(true);
   fetchData("https://hn.algolia.com/api/v1/search?", _.fetchParams)
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       let tempList = [];
       response.hits.forEach((newsItem) => {
         tempList = [

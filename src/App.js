@@ -4,51 +4,57 @@ import { fetchBecauseDetailsIdChanged } from "./functions/fetchBecauseDetailsIdC
 import { fetchStats } from "./functions/fetchStats";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CssBaseline, Container } from "@mui/material";
 import HomePage from "./components/HomePage";
 import NewsPanelPage from "./components/NewsPanelPage";
 import ContactPage from "./components/ContactPage";
 import NotFoundPage from "./components/NotFoundPage";
 import AppBarComponent from "./components/AppBarComponent";
 import useStyles from "./components/useStyles.jsx";
-import { CssBaseline, Container } from "@mui/material";
 
 const App = () => {
   const classes = useStyles();
 
   //declare states:
+  const [chartIsLoading, setChartIsLoading] = useState(false);
+  const [chartUrl, setChartUrl] = useState(null);
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); //!!
   const [pageNumber, setPageNumber] = useState(1);
   const [isDetailsLoading, setIsDetailsLoading] = useState(true);
   const [isListLoading, setIsListLoading] = useState(false);
-  const [showState, setShowState] = useState({
-    isShowingFetchForm: false,
-    isShowingFilterForm: false,
-    activeList: "all",
-  });
-  const [fetchedNumbers, setFetchedNumbers] = useState({
-    totalFound: 0,
-    numberOfpagesFound: 0,
-    pageShown: 1,
-  });
-  const [stats, setStats] = useState({});
   const [isShowingFetch, setIsShowingFetch] = useState(true);
   const [newsList, setNewsList] = useState([]);
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [messageObject, setMessageObject] = useState(null);
   const [newsDetails, setNewsDetails] = useState(null);
   const [detailsId, setDetailsId] = useState(null);
+
+  const [showState, setShowState] = useState({
+    isShowingFetchForm: false,
+    isShowingFilterForm: false,
+    activeList: "all",
+  });
+
+  const [fetchedNumbers, setFetchedNumbers] = useState({
+    totalFound: 0,
+    numberOfpagesFound: 0,
+    pageShown: 1,
+  });
+
   const [favesList, setFavesList] = useState(
     JSON.parse(window.localStorage.getItem("faves"))
       ? JSON.parse(window.localStorage.getItem("faves"))
       : []
   );
+
   const [fetchParams, setFetchParams] = useState({
     query: "success",
     tags: "",
     numericFilters: ``,
     page: 0,
   });
+
   const [filterParams, setFilterParams] = useState({
     filterTerm: "",
     sortBy: "default",
@@ -56,7 +62,13 @@ const App = () => {
 
   //add the states and setStates into the object "_"
   //it is easy to pass the "_" down the tree to all components and functions
+  //so we do not need useContext which results in an easier code
+  // and unlike useContext, this method is applicable to functions too
   const _ = {};
+  _.chartIsLoading = chartIsLoading;
+  _.setChartIsLoading = setChartIsLoading;
+  _.chartUrl = chartUrl;
+  _.setChartUrl = setChartUrl;
   _.isModalOpen = isModalOpen;
   _.setIsModalOpen = setIsModalOpen;
   _.isFetchingDetails = setIsFetchingDetails;
@@ -67,8 +79,6 @@ const App = () => {
   _.setIsDetailsLoading = setIsDetailsLoading;
   _.isListLoading = isListLoading;
   _.setIsListLoading = setIsListLoading;
-  _.stats = stats;
-  _.setStats = setStats;
   _.isShowingFetch = isShowingFetch;
   _.setIsShowingFetch = setIsShowingFetch;
   _.newsList = newsList;
@@ -110,7 +120,7 @@ const App = () => {
     fetchBecauseDetailsIdChanged(_);
   }, [detailsId]);
   //end of useEffects
-  //
+
   return (
     <div className={classes.root}>
       <CssBaseline />

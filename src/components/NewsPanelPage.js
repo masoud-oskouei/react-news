@@ -5,24 +5,11 @@ import NewsDetails from "./NewsDetails";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Grid, Pagination } from "@mui/material";
+import { newsPanelPageHasMounted } from "../functions/newsPanelPageHasMounted.js";
 const NewsPanelPage = (props) => {
-  useEffect(() => {
-    console.log("props.newsList=", props._.newsList);
-    console.log("props.favesList=", props._.favesList);
-  }, []);
   const location = useLocation();
   useEffect(() => {
-    props._.setShowState({
-      ...props._.showState,
-      isShowingFetchForm: props.routedFrom === "newspanel/*" ? true : false,
-      isShowingFilterForm: props.routedFrom === "faves/*" ? true : false,
-      activeList: props.routedFrom === "newspanel/*" ? "all" : "faves",
-    });
-    //props.setNewsDetails(null);
-    props._.setFilterParams({
-      filterTerm: "",
-      sortBy: "default",
-    });
+    newsPanelPageHasMounted(props._, props.routedFrom);
   }, [location]);
   return (
     <div>
@@ -61,7 +48,7 @@ const NewsPanelPage = (props) => {
       </div>
 
       <NewsRows _={props._} />
-      <NewsDetails routedFrom={":newsId"} _={props._} />
+      <NewsDetails _={props._} />
     </div>
   );
 };

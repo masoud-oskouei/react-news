@@ -1,5 +1,7 @@
 import { fetchData } from "./fetchData.js";
+import { createChartUrl } from "./createChartUrl.js";
 export const fetchStats = async (_) => {
+  _.setChartIsLoading(true);
   let daysBeforeToday = [0, 1, 2, 3, 4, 5, 6];
   let x = 0;
   let requests = [];
@@ -45,7 +47,8 @@ export const fetchStats = async (_) => {
       statsLabled.forEach((labledStat) => {
         stats.push(labledStat.nbHits);
       });
-      _.setStats(stats);
+      //_.setStats(stats);
+      createChartUrl(stats, _);
     }
   });
 };
