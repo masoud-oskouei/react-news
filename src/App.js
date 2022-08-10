@@ -1,5 +1,4 @@
-import { fetchBecauseParamsChanged } from "./functions/fetchBecauseParamsChanged";
-import { fetchBecausePageChanged } from "./functions/fetchBecausePageChanged";
+import { fetchNewsList } from "./functions/fetchNewsList";
 import { fetchBecauseDetailsIdChanged } from "./functions/fetchBecauseDetailsIdChanged";
 import { fetchStats } from "./functions/fetchStats";
 import { useState, useEffect } from "react";
@@ -16,6 +15,8 @@ const App = () => {
   const classes = useStyles();
 
   //declare states:
+
+  const [selectedPage, setSelectedPage] = useState(1);
   const [chartIsLoading, setChartIsLoading] = useState(false);
   const [chartUrl, setChartUrl] = useState(null);
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
@@ -65,6 +66,8 @@ const App = () => {
   //so we do not need useContext which results in an easier code
   // and unlike useContext, this method is applicable to functions too
   const _ = {};
+  _.selectedPage = selectedPage;
+  _.setSelectedPage = setSelectedPage;
   _.chartIsLoading = chartIsLoading;
   _.setChartIsLoading = setChartIsLoading;
   _.chartUrl = chartUrl;
@@ -109,12 +112,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    fetchBecauseParamsChanged(_);
-  }, [fetchParams]);
-
-  useEffect(() => {
-    fetchBecausePageChanged(_);
-  }, [pageNumber]);
+    fetchNewsList(_);
+  }, [selectedPage, fetchParams]);
 
   useEffect(() => {
     fetchBecauseDetailsIdChanged(_);

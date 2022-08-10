@@ -1,3 +1,8 @@
+/*This form is for searching the neas on the server
+The user fills this form and when clicks the "fetch" button
+the appropriate useEffect in the App.js component prforms the API call.
+
+*/
 import { handleSubmitFetchForm } from "../functions/handleSubmitFetchForm";
 import { goBacktoFilterForm } from "../functions/goBacktoFilterForm";
 import { Grid, Button, TextField } from "@mui/material";
@@ -7,7 +12,7 @@ const FetchForm = (props) => {
   const classes = useStyles();
 
   return (
-    <div style={{ marginTop: "1em" }}>
+    <div style={{ margin: ".5em" }}>
       <Grid container spacing={3} justifyContent="center">
         <Grid item>
           <TextField
@@ -25,7 +30,7 @@ const FetchForm = (props) => {
               className={classes.datePicker}
               id="dateFrom"
               type="date"
-              defaultValue={`${new Date(new Date() - 365 * 24 * 3600 * 1000)
+              defaultValue={`${new Date(new Date() - 365 * 24 * 3600 * 1000) // a year ago
                 .toISOString()
                 .slice(0, 10)}`}
               min="2010-01-01"
@@ -40,7 +45,7 @@ const FetchForm = (props) => {
               className={classes.datePicker}
               id="dateTo"
               type="date"
-              defaultValue={`${new Date().toISOString().slice(0, 10)}`}
+              defaultValue={`${new Date().toISOString().slice(0, 10)}`} //today
             ></input>
           </label>
         </Grid>
@@ -49,19 +54,19 @@ const FetchForm = (props) => {
             variant="contained"
             color="primary"
             onClick={(e) => {
-              handleSubmitFetchForm(e, props._);
+              handleSubmitFetchForm(e, props._, { selectedPage: 1 }); //make API call
             }}
           >
             Fetch
           </Button>
         </Grid>
-        <Grid item xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <Grid item xs={12}>
           <Button
             fullWidth
             variant="contained"
             color="primary"
             onClick={(e) => {
-              goBacktoFilterForm(e, props._);
+              goBacktoFilterForm(e, props._); // bring up the filter form
             }}
           >
             Filter below items &gt;&gt;&gt;

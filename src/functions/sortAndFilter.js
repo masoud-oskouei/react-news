@@ -1,3 +1,4 @@
+//sort and filter the list that is going to be shown
 import { sortFunctions } from "../functions/sortFunctions";
 export const sortAndFilter = (list, _) => {
   return list

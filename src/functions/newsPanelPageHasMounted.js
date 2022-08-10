@@ -1,3 +1,5 @@
+// when newsPanelPage mounts, this functions decides what to show
+// based on the route that has activated newsPanelPage
 export const newsPanelPageHasMounted = (_, routedFrom) => {
   _.setShowState({
     ..._.showState,

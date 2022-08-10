@@ -1,3 +1,4 @@
+// Each of the NavLinks that appear on top of the page
 import { NavLink } from "react-router-dom";
 import useStyles from "./useStyles.jsx";
 

@@ -1,3 +1,6 @@
+/* Create 7 API calls and when all are done, call the createChartUrl
+to create a url that will be used as the "src" of the <img> on the homePage
+which will show the chart  */
 import { fetchData } from "./fetchData.js";
 import { createChartUrl } from "./createChartUrl.js";
 export const fetchStats = async (_) => {

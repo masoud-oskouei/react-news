@@ -1,4 +1,5 @@
-import { Typography, Modal, Box, CircularProgress } from "@mui/material";
+//This component resides inside the Modal window and contains the details of the news item selected
+import { Typography } from "@mui/material";
 
 const NewsDescription = (props) => {
   return (

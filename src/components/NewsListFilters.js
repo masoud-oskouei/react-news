@@ -1,4 +1,5 @@
-// the listFilters appears on top
+// In the NewsPanelPage when the user clicks "FILTER BELOW ITEMS", this forms appears
+// and it has inputs to filter the showing list
 import useStyles from "./useStyles.jsx";
 import { Grid, Button, TextField } from "@mui/material";
 import { goBacktoFetchForm } from "../functions/goBacktoFetchForm.js";
@@ -42,10 +43,9 @@ function NewsListFilters(props) {
         {props._.showState.activeList === "all" && (
           <Grid item xs={12}>
             <Button
-              style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
+              color="primary"
               variant="contained"
               fullWidth
-              color="primary"
               onClick={(e) => goBacktoFetchForm(e, props._)}
             >
               &lt;&lt;&lt; Go Back to Fetch Form{" "}

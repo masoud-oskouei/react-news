@@ -1,3 +1,6 @@
+// Fetch details of the clicked newsItem title
+// when the user clicks a news title in the list, the detailsId changes
+// and a useEffect executes this function.
 import { fetchData } from "./fetchData.js";
 export const fetchBecauseDetailsIdChanged = (_) => {
   if (_.detailsId) {

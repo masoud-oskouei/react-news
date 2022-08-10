@@ -1,6 +1,7 @@
+//The home page which the user encounters first
 import { Link } from "react-router-dom";
 import useStyles from "./useStyles.jsx";
-import { Typography, LinearProgress, CircularProgress } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 
 const HomePage = (props) => {
   const classes = useStyles();
@@ -14,7 +15,7 @@ const HomePage = (props) => {
           Click here to enter the News world!
         </Link>
       </Typography>
-      {props._.chartIsLoading && (
+      {props._.chartIsLoading && ( //chart is being prepared
         <Typography variant="h5" className="title">
           <br />
           <br />
@@ -23,7 +24,9 @@ const HomePage = (props) => {
           <CircularProgress />
         </Typography>
       )}
-      {!props._.chartIsLoading && (
+      {!props._.chartIsLoading && ( //chart is ready
+        // This is an image whose "src" is a special url. This url is created by us and contains chart data.
+        // the server creates an image based on the chart data and returns it
         <img width="650px" src={props._.chartUrl} alt=""></img>
       )}
     </div>

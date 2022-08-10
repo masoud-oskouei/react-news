@@ -1,3 +1,4 @@
+// The safety net of the "React Router"
 const NotFound = () => {
   return (
     <div className="pageContainer">

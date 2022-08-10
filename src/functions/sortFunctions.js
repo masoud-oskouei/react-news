@@ -1,3 +1,4 @@
+// functions that are used to sort different kinds of data
 export const sortFunctions = {
   time: (a, b) => {
     let aT = new Date(a).getTime(); //convert a to milliseconds

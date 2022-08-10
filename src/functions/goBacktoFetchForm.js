@@ -1,3 +1,4 @@
+//show fetchForm and hide filterForm
 export const goBacktoFetchForm = (e, _) => {
   _.setShowState({
     ..._.showState,

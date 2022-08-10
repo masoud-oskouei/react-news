@@ -1,3 +1,4 @@
+//includes NavLinks on top of the page
 import { AppBar, Toolbar } from "@mui/material";
 import NavLinkComponent from "./NavLinkComponent.js";
 import CampaignIcon from "@mui/icons-material/Campaign";

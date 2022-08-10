@@ -1,8 +1,7 @@
+//the page that has the contact form
 import MessageForm from "./MessageForm.js";
 import MessageSubmitted from "./MessageSubmitted.js";
-import useStyles from "./useStyles.jsx";
 const ContactPage = (props) => {
-  const classes = useStyles();
   return (
     <div>
       <h2>Contact Page</h2>

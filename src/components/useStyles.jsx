@@ -8,7 +8,8 @@ const useStyles = makeStyles({
     med:"#1B2A41",
     light:"#324A5F",
     paper:"#E6E8E6",
-    paper2:"#CCC9DC"
+    paper2:"#CCC9DC",
+   button2: "#4B6858"
   } ,
   root:{
  padding: "1em",

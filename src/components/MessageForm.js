@@ -1,3 +1,4 @@
+// This is the form that is inside the contactPge. It received the data from the user.
 import { Button, TextField } from "@mui/material";
 import { handleMessage } from "../functions/handleMessage.js";
 import useStyles from "./useStyles.jsx";

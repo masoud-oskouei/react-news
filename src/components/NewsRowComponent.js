@@ -1,3 +1,4 @@
+//Each of the rows that are shown in the list
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
@@ -5,7 +6,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { favesHandler } from "../functions/favesHandler";
-//import * as React from "react";
 
 const NewsRowComponent = (props) => {
   return (
@@ -44,6 +44,7 @@ const NewsRowComponent = (props) => {
                 variant="body2"
                 color="text.primary"
               >
+                {/* The button that adds or removes the item to/from Faves list */}
                 <button
                   onClick={() => {
                     favesHandler(props.newsItem, props._);
