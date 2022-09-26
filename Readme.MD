@@ -1,4 +1,4 @@
-# Heroku website link
+# A Web-App For Searching News
 
 ## To see the app working, go to
 
